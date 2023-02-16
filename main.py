@@ -1,6 +1,7 @@
 import requests
 # My fake server: https://my-json-server.typicode.com/KRISMOK95/MT
 
+# Request
 url = "https://my-json-server.typicode.com/KRISMOK95/MT/Failures/1"
 
 response = requests.get(url)
@@ -9,11 +10,7 @@ response_json = response.json()
 print(response_json)
 
 ####
-
-num1 = 10
-num2 = 20
-total = num1 + num2
-print(f"Sum: " , total)
+# POST
 new_data = {
     "id": 4, "title": "explosion"
 }
