@@ -1,6 +1,9 @@
 # MT
 Master Thesis 2023
-# This is a test codes for FastAPI (Get and Post) to create a sum calculator
+# This is a test codes for AAS creation
 
-1) Run uvicorn main:app --reload #Start the server
-2) Type http://localhost:8000/form in brower to get the web app calculator
+So far: 
+1) Create 2 properties
+2) Create 1 submodel
+3) add those 2 properties into the submodel
+4) create env for this submodel
