@@ -1,34 +1,37 @@
-from fastapi import FastAPI, Form
-from fastapi.responses import HTMLResponse
+import aas_core3_rc02.types as aas_types
 
-app = FastAPI()
+''' #this can connect to MODBUSs
+# You can directly access the element properties.
+another_element.value = b'\xDE\xAD\xC0\xDE'
+'''
 
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
 
-@app.get("/form")
-async def form_get():
-    content = """
-        <html>
-          <head>
-            <title>Sum Calculator</title>
-          </head>
-          <body>
-            <h1>Sum Calculator</h1>
-            <form action="/sum" method="post">
-              <label for="var1">Variable 1:</label>
-              <input type="number" id="var1" name="var1"><br><br>
-              <label for="var2">Variable 2:</label>
-              <input type="number" id="var2" name="var2"><br><br>
-              <input type="submit" value="Calculate Sum">
-            </form>
-          </body>
-        </html>
-    """
-    return HTMLResponse(content=content)
 
-@app.post("/sum")
-async def sum_post(var1: int = Form(...), var2: int = Form(...)):
-    total = var1 + var2
-    return {"sum": total}
+# Create the chiller temperature property
+chiller_temp = aas_types.Property(
+    id_short="chiller_temp",
+    value_type=aas_types.DataTypeDefXsd.FLOAT,
+    value="0.0"
+)
+
+# Create the chiller status property
+chiller_status = aas_types.Property(
+    id_short="chiller_status",
+    value_type=aas_types.DataTypeDefXsd.STRING,
+    value="OFF"
+)
+
+# Create the submodel for the chiller
+chiller_submodel = aas_types.Submodel(
+    id="chiller_submodel",
+    submodel_elements=[chiller_temp, chiller_status]
+)
+
+# Create the environment to wrap it all up
+environment = aas_types.Environment(
+    submodels=[chiller_submodel]
+)
+
+# Now you can access and modify the properties of the chiller
+environment.submodels[0].submodel_elements[0].value = 20.0 # set chiller temperature to 20.0
+environment.submodels[0].submodel_elements[1].value = "ON" # set chiller status to ON
